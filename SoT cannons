@@ -1,0 +1,51 @@
+def SolveQuartic(coefficients: list) -> list: 
+    a = coefficients[4]
+    b = coefficients[3] / a
+    c = coefficients[2] / a
+    d = coefficients[1] / a
+    e = coefficients[0] / a
+ 
+    Q1 = c * c - 3 * b * d + 12 * e
+    Q2 = 2 * c * c * c - 9 * b * c * d + 27 * d * d + 27 * b * b * e - 72 * c * e
+    Q3 = 8 * b * c - 16 * d - 2 * b * b * b
+    Q4 = 3 * b * b - 8 * c
+ 
+    Q5 = power((Q2 / 2 + np.sqrt(Q2 * Q2 / 4 - Q1 * Q1 * Q1), 1 / 3)
+    Q6 = (Q1 / Q5 + Q5) / 3
+    Q7 = 2 * np.sqrt(Q4 / 12 + Q6)
+ 
+    roots[0] = (-b - Q7 - np.sqrt(4 * Q4 / 6 - 4 * Q6 - Q3 / Q7)) / 4
+    roots[1] = (-b - Q7 + np.sqrt(4 * Q4 / 6 - 4 * Q6 - Q3 / Q7)) / 4
+    roots[2] = (-b + Q7 - np.sqrt(4 * Q4 / 6 - 4 * Q6 + Q3 / Q7)) / 4
+    roots[3] = (-b + Q7 + np.sqrt(4 * Q4 / 6 - 4 * Q6 + Q3 / Q7)) / 4
+}
+
+    def AimAtMovingTarget(oTargetPos: Vector, oTargetVelocity: Vector, fProjectileSpeed: float, fProjectileGravityScalar: float, oSourcePos: Vector, oSourceVelocity, oOutLow, oOutHigh) {
+        v = (oTargetVelocity - oSourceVelocity)
+        g = (0, 0, -9.81 * fProjectileGravityScalar)
+        p = (oTargetPos - oSourcePos)
+     
+        c4 = float(dot(g, g) * 0.25)
+        c3 = float(dot(v, g))
+        c2 = float(dot(p, g) + dot(v, v) - (fProjectileSpeed * fProjectileSpeed))
+        c1 = float(2 * dot(p, v))
+        c0 = float(dot(p, p))
+     
+        pOutRoots = np.roots([c0, c1, c2, c3, c4])
+          
+
+
+        float fBestRoot = std::numeric_limits<float>::max()
+        for (int i = 0 i < 4 i++) {
+            if (pOutRoots[i].real() > 0 && std::abs(pOutRoots[i].imag()) < 0.0001 && pOutRoots[i].real() < fBestRoot) {
+                fBestRoot = pOutRoots[i].real()
+            }
+        }
+     
+        if (fBestRoot == std::numeric_limits<float>::max())
+            return 0
+        
+        const SDK::FVector oAimAt = oTargetPos + (v * fBestRoot)
+     
+        return AimAtStaticTarget(oAimAt, fProjectileSpeed, fProjectileGravityScalar, oSourcePos, oOutLow, oOutHigh)
+    }
